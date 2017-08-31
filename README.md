@@ -9,6 +9,7 @@
 ** sudo cp -Rvf RPB/remoteswitch /etc/init.d/
 ** sudo chmod +x /etc/init.d/remoteswitch
 ** sudo cat > /etc/rc.local <<EOF
+<pre>
 #!/bin/sh -e
 #
 # rc.local
@@ -33,6 +34,7 @@ gpio mode 25 out
 gpio write 25 1
 
 exit 0
+</pre>
 EOF
 ** Reboot your raspberry and try to press the power button, reboot button and test it.
 ## Have fun!
