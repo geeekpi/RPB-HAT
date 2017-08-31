@@ -1,3 +1,88 @@
 #!/bin/bash
-# This is a initialize shell script.
+# automatically booting/shutdown/reboot your raspberry Pi, and also mapped the DISK status led to remote controller button board.
+# Testing Environment: 
+# Hardware: Raspberry Pi 3 Module B 
+# OS: Raspbian-2017-08-16-STRETCH
+# RASPBIAN STRETCH WITH DESKTOP
+# Image with desktop based on Debian Stretch
+# Version:August 2017
+# Release date:2017-08-16
+# Kernel version:4.9
+# -----------------------------------------------
+# author: yoyojacky
+# Modified Date: 2017-08-31
 
+# Define pin number's function.
+# NOTE: here are using BCM naming system.
+#+-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+# | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+# +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+# |     |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |
+# |   2 |   8 |   SDA.1 | ALT0 | 1 |  3 || 4  |   |      | 5v      |     |     |
+# |   3 |   9 |   SCL.1 | ALT0 | 1 |  5 || 6  |   |      | 0v      |     |     |
+# |   4 |   7 | GPIO. 7 |   IN | 1 |  7 || 8  | 0 | IN   | TxD     | 15  | 14  |
+# |     |     |      0v |      |   |  9 || 10 | 1 | IN   | RxD     | 16  | 15  |
+# |  17 |   0 | GPIO. 0 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO. 1 | 1   | 18  |
+# |  27 |   2 | GPIO. 2 |   IN | 0 | 13 || 14 |   |      | 0v      |     |     |
+# |  22 |   3 | GPIO. 3 |   IN | 1 | 15 || 16 | 0 | IN   | GPIO. 4 | 4   | 23  |
+# |     |     |    3.3v |      |   | 17 || 18 | 0 | IN   | GPIO. 5 | 5   | 24  |
+# |  10 |  12 |    MOSI | ALT0 | 0 | 19 || 20 |   |      | 0v      |     |     |
+# |   9 |  13 |    MISO | ALT0 | 0 | 21 || 22 | 0 | IN   | GPIO. 6 | 6   | 25  |
+# |  11 |  14 |    SCLK | ALT0 | 0 | 23 || 24 | 1 | OUT  | CE0     | 10  | 8   |
+# |     |     |      0v |      |   | 25 || 26 | 1 | OUT  | CE1     | 11  | 7   |
+# |   0 |  30 |   SDA.0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL.0   | 31  | 1   |
+# |   5 |  21 | GPIO.21 |   IN | 1 | 29 || 30 |   |      | 0v      |     |     |
+# |   6 |  22 | GPIO.22 |   IN | 1 | 31 || 32 | 0 | IN   | GPIO.26 | 26  | 12  |
+# |  13 |  23 | GPIO.23 |   IN | 0 | 33 || 34 |   |      | 0v      |     |     |
+# |  19 |  24 | GPIO.24 |   IN | 0 | 35 || 36 | 0 | IN   | GPIO.27 | 27  | 16  |
+# |  26 |  25 | GPIO.25 |  OUT | 1 | 37 || 38 | 0 | IN   | GPIO.28 | 28  | 20  |
+# |     |     |      0v |      |   | 39 || 40 | 0 | OUT  | GPIO.29 | 29  | 21  |
+# +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+# | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+# +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+## for example, BCM 26 pin is connected to the board.
+#This pin is for MCU to detect system status, it it is low level means operating system has been shutting down.
+# and it will tell MCU to cut off the power.
+shutdownPin=26
+
+#This ListenPin is connected to BCM Pin 24. if BCM pin 24 is waiting for the signal from MCU.
+#But shell script are running by gpio read Pin, so must be mapped to wringPi naming system.
+# ListenPin=5 means wiringPi's gpio5 = BCM pin24.
+ListenPin=5
+
+#This pin is stands for reboot pin, it is BCM Pin16 and wiringPi name is gpio27
+RebootPin=27
+
+#initialize the gpio pin.
+function shutdownPinSetup(){
+         `sh -c "echo ${shutdownPin} > /sys/class/gpio/export"`
+         `sh -c "cd /sys/class/gpio/gpio${shutdownPin}/"`
+         `sh -c "echo out > direction"`
+         `sh -c "echo 1 > value"`
+}
+
+#clear the settings.
+function clear_ShutdownPin_setting(){
+         `sh -c "echo in > /sys/class/gpio/gpio${shutdownPin}/direction"`
+         `sh -c "echo 0 > /sys/class/gpio/gpio${shutdownPin}/value"`
+         `sh -c "echo ${shutdownPin} > /sys/class/gpio/unexport"`
+}
+
+#initializing shutdown pin for MCU.
+shutdownPinSetup
+
+#Main loop to detect ListenPin's level, if high level will shut down the system.
+while true
+do
+   RebootPin_STATS=`gpio read ${RebootPin}`
+   Signal_STATS=`gpio read ${ListenPin}`
+   if [[ ${Signal_STATS} == 1 ]];then 
+      sudo sync
+      clear_ShutdownPin_setting
+      sudo shutdown -h now
+   fi
+    if [[ ${RebootPin_STATS} == 1 ]];then 
+      sudo sync
+      sudo reboot
+   fi
+done
