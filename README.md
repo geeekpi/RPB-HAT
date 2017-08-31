@@ -3,12 +3,12 @@
 ## And you can use it on your Raspberry Pi 3 module B, and with operating system: Raspbian.
 ### How to use it ###
 * Just download it from https://github.com/geeekpi/RPB.git by:
-** cd ~
-** git clone https://github.com/geeekpi/RPB.git
-** cd RPB/
-** sudo cp -Rvf RPB/remoteswitch /etc/init.d/
-** sudo chmod +x /etc/init.d/remoteswitch
-** sudo cat > /etc/rc.local <<EOF
+* cd ~
+* git clone https://github.com/geeekpi/RPB.git
+* cd RPB/
+* sudo cp -Rvf RPB/remoteswitch /etc/init.d/
+* sudo chmod +x /etc/init.d/remoteswitch
+* sudo cat > /etc/rc.local <<EOF
 <pre>
 #!/bin/sh -e
 #
@@ -36,5 +36,5 @@ gpio write 25 1
 exit 0
 </pre>
 EOF
-** Reboot your raspberry and try to press the power button, reboot button and test it.
+* Reboot your raspberry and try to press the power button, reboot button and test it.
 ## Have fun!
