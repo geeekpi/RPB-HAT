@@ -56,9 +56,8 @@ RebootPin=27
 #initialize the gpio pin.
 function shutdownPinSetup(){
          `sh -c "echo ${shutdownPin} > /sys/class/gpio/export"`
-         `sh -c "cd /sys/class/gpio/gpio${shutdownPin}/"`
-         `sh -c "echo out > direction"`
-         `sh -c "echo 1 > value"`
+         `sh -c "echo out > /sys/class/gpio/gpio${shutdownPin}/direction"`
+         `sh -c "echo 1 > /sys/class/gpio/gpio${shutdownPin}/value"`
 }
 
 #clear the settings.
