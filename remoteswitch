@@ -61,6 +61,7 @@ if [ ${Package} != 'wiringpi' ]; then
    echo -e "\033[32;40mPlease check the network/wifi configuration and try again!\033[0m"
    else
    sudo apt-get -y install wiringPi 
+   fi
 fi
 
 #initialize the gpio pin.
