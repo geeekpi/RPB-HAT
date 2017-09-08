@@ -38,5 +38,6 @@ gpio write 25 1
 exit 0
 </pre>
 EOF
+* sudo chmod +x /etc/rc.local
 * Reboot your raspberry and try to press the power button, reboot button and test it.
 ## Have fun!
