@@ -43,15 +43,19 @@
 ## for example, BCM 26 pin is connected to the board.
 #This pin is for MCU to detect system status, it it is low level means operating system has been shutting down.
 # and it will tell MCU to cut off the power.
-shutdownPin=26
+# shutdownPin=26
+shutdownPin=18
 
 #This ListenPin is connected to BCM Pin 24. if BCM pin 24 is waiting for the signal from MCU.
 #But shell script are running by gpio read Pin, so must be mapped to wringPi naming system.
 # ListenPin=5 means wiringPi's gpio5 = BCM pin24.
-ListenPin=5
+#ListenPin=5
+ListenPin=7
+
 
 #This pin is stands for reboot pin, it is BCM Pin16 and wiringPi name is gpio27
-RebootPin=27
+#RebootPin=27
+RebootPin=0
 
 #check if wiringPi package has been installed, if not, install it.
 Package=`dpkg-query -l |grep wiringPi | awk '{print $2}'`
