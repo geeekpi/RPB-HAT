@@ -8,7 +8,7 @@
 * cd ~
 * git clone https://github.com/geeekpi/RPB.git
 * cd RPB/
-* sudo cp -Rvf RPB/remoteswitch /etc/init.d/
+* sudo cp -Rvf remoteswitch /etc/init.d/
 * sudo chmod +x /etc/init.d/remoteswitch
 * sudo cat > /etc/rc.local <<EOF
 <pre>
