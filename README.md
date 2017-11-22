@@ -4,7 +4,12 @@
 ## It also supports press button onboard.
 ## And you can use it on your Raspberry Pi 3 module B, and with operating system: Raspbian.
 ### How to use it ###
-* Just download it from https://github.com/geeekpi/RPB.git by:
+#### Install package's for script. 
+#### check if wiringPi package has been installed, if not, install it.
+* sudo apt-get -y update 2&>/dev/null
+* sudo apt-get -y install chkconfig  2&>/dev/null
+* sudo apt-get -y install wiringPi   2&>/dev/null
+#### Just download it from https://github.com/geeekpi/RPB.git by:
 * cd ~
 * git clone https://github.com/geeekpi/RPB.git
 * cd RPB/
@@ -31,8 +36,8 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
-sudo gpio mode 7 out
-sudo gpio write 7 1
+* sudo gpio mode 7 out
+* sudo gpio write 7 1
 
 exit 0
 </pre>
