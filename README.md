@@ -15,6 +15,8 @@
 * cd RPB/
 * sudo cp -Rvf remoteswitch /etc/init.d/
 * sudo chmod +x /etc/init.d/remoteswitch
+* sudo chkconfig --add remoteswitch 2&>/dev/null
+* sudo chkconfig --level 2345 remoteswitch on  2&>/dev/null
 * sudo cat > /etc/rc.local <<EOF
 <pre>
 #!/bin/sh -e
@@ -38,7 +40,6 @@ fi
 
 sudo gpio mode 7 out
 sudo gpio write 7 1
-sudo /etc/init.d/remoteswitch & 
 
 exit 0
 </pre>
