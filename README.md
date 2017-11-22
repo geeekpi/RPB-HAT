@@ -36,8 +36,9 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
-* sudo gpio mode 7 out
-* sudo gpio write 7 1
+sudo gpio mode 7 out
+sudo gpio write 7 1
+sudo /etc/init.d/remoteswitch & 
 
 exit 0
 </pre>
