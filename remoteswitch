@@ -40,62 +40,25 @@
 ## +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
 ## | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
 ## +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
-## for example, BCM 26 pin is connected to the board.
-#This pin is for MCU to detect system status, it it is low level means operating system has been shutting down.
-# and it will tell MCU to cut off the power.
-# shutdownPin=26
-shutdownPin=18
+# This pin is based on wringPi mode, and it will detect the level of the pin, if level is high,
+# means need to initialize shutdown procedure.
+shutdown_signal_pin=1
 
-#This ListenPin is connected to BCM Pin 24. if BCM pin 24 is waiting for the signal from MCU.
-#But shell script are running by gpio read Pin, so must be mapped to wringPi naming system.
-# ListenPin=5 means wiringPi's gpio5 = BCM pin24.
-#ListenPin=5
-ListenPin=7
-
-
-#This pin is stands for reboot pin, it is BCM Pin16 and wiringPi name is gpio27
-#RebootPin=27
-RebootPin=0
-
-#check if wiringPi package has been installed, if not, install it.
-Package=`dpkg-query -l |grep wiringPi | awk '{print $2}'`
-if [ ${Package} != 'wiringpi' ]; then
-   sudo apt-get update 
-   if [ $? -ne 0 ]; then
-   echo -e "\033[32;40mPlease check the network/wifi configuration and try again!\033[0m"
-   else
-   sudo apt-get -y install wiringPi 
-   fi
-fi
-
-#initialize the gpio pin.
-function shutdownPinSetup(){
-         `sh -c "sudo echo ${shutdownPin} > /sys/class/gpio/export"`
-         `sh -c "sudo echo out > /sys/class/gpio/gpio${shutdownPin}/direction"`
-         `sh -c "sudo echo 1 > /sys/class/gpio/gpio${shutdownPin}/value"`
-}
-
-#clear the settings.
-function clear_ShutdownPin_setting(){
-         `sh -c "sudo echo in > /sys/class/gpio/gpio${shutdownPin}/direction"`
-         `sh -c "sudo echo 0 > /sys/class/gpio/gpio${shutdownPin}/value"`
-         `sh -c "sudo echo ${shutdownPin} > /sys/class/gpio/unexport"`
-}
-
-#initializing shutdown pin for MCU.
-shutdownPinSetup
+#This pin is based on wringPi mode, and  it will initialize the reboot procedure when it's levle is
+# HIGH.
+reboot_signal_pin=0
 
 #Main loop to detect ListenPin's level, if high level will shut down the system.
 while true
 do
-   RebootPin_STATS=`gpio read ${RebootPin}`
-   Signal_STATS=`gpio read ${ListenPin}`
-   if [[ ${Signal_STATS} == 1 ]];then 
+   sleep 0.02
+   Reboot_STATS=`gpio read ${reboot_signal_pin}`
+   shutdown_STATS=`gpio read ${shutdown_signal_pin}`
+   if [[ ${shutdown_STATS} == 1 ]];then
       sudo sync
-      clear_ShutdownPin_setting
       sudo shutdown -h now
    fi
-    if [[ ${RebootPin_STATS} == 1 ]];then 
+    if [[ ${Reboot_STATS} == 1 ]];then
       sudo sync
       sudo reboot
    fi
