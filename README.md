@@ -1,5 +1,6 @@
-# RPB-HAT stands for Remote Power Button Hat board
-## This is for a remote power control with GEEEKPI's new designed board.
+# RPB-HAT stands for Remote Power Button Hat board 
+## This is for a remote power control with GEEEKPI's new designed board, 
+## It fit for Power remote button Version 2.02 (Please notice this)
 ## It's a nice power controller board for your project which needs power on/off/reboot by remote controller.
 ## It also supports press button onboard.
 ## And you can use it on your Raspberry Pi 3 module B, and with operating system: Raspbian.
