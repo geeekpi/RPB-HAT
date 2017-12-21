@@ -8,7 +8,7 @@
 #### Install package's for script. 
 #### check if wiringPi package has been installed, if not, install it.
 * sudo apt-get -y update 
-* sudo apt-get -y install wiringPi 
+* sudo apt-get -y install wiringPi chkconfig
 #### Just download it from https://github.com/geeekpi/RPB.git by:
 * cd ~
 * git clone https://github.com/geeekpi/RPB.git
