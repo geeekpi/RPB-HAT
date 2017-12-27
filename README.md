@@ -10,18 +10,18 @@
 * sudo apt-get -y update 
 * sudo apt-get -y install wiringPi chkconfig
 ## Method 1 ##
-#### Just download it from https://github.com/geeekpi/RPB.git by:
+#### Just download it from https://github.com/geeekpi/RPB-HAT by:
 * cd ~
-* git clone https://github.com/geeekpi/RPB.git
-* cd RPB/
+* git clone https://github.com/geeekpi/RPB-HAT.git
+* cd RPB-HAT/
 * sudo chmod +x setup.sh
 * sudo bash setup.sh
 --------------------------------------------------------------------------------------------------------------------
 ## Method 2 ##
 #### You can set it up by yourself, so that you can learn about it. (for learning people)
 * cd ~
-* git clone https://github.com/geeekpi/RPB.git
-* cd RPB/
+* git clone https://github.com/geeekpi/RPB-HAT.git
+* cd RPB-HAT/
 * sudo cp -Rvf remoteswitch /etc/init.d/
 * sudo chmod +x /etc/init.d/remoteswitch
 * sudo chkconfig --add remoteswitch 
