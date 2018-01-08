@@ -6,7 +6,7 @@
 #### Just download it from https://github.com/geeekpi/RPB-HAT by:
 * cd ~
 * git clone https://github.com/geeekpi/RPB-HAT.git
-* cd RPB-HAT/
+* cd RPB/
 * sudo chmod +x setup.sh
 * sudo bash setup.sh
 Reboot your raspberry and try to press the power button, reboot button and test it.
