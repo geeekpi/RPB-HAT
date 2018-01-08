@@ -42,24 +42,15 @@
 ## +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
 # This pin is based on wringPi mode, and it will detect the level of the pin, if level is high,
 # means need to initialize shutdown procedure.
-shutdown_signal_pin=1
-
-#This pin is based on wringPi mode, and  it will initialize the reboot procedure when it's levle is
-# HIGH.
-reboot_signal_pin=0
+shutdown_signal_pin=5
 
 #Main loop to detect ListenPin's level, if high level will shut down the system.
 while true
 do
    sleep 0.02
-   Reboot_STATS=`gpio read ${reboot_signal_pin}`
    shutdown_STATS=`gpio read ${shutdown_signal_pin}`
    if [[ ${shutdown_STATS} == 1 ]];then
       sudo sync
       sudo shutdown -h now
-   fi
-    if [[ ${Reboot_STATS} == 1 ]];then
-      sudo sync
-      sudo reboot
    fi
 done
