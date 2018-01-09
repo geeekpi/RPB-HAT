@@ -1,7 +1,7 @@
 #!/bin/bash
 echo -e "\e[32;40mInstall package's for script. \e[0m"
 sudo apt-get -y update 
-sudo apt-get -y install wiringPi git-core chkconfig
+sudo apt-get -y install wiringpi git-core chkconfig
 echo -e "\e[32;40m Download RPB driver...\e[0m"
 cd ~
 git clone https://github.com/geeekpi/RPB.git
