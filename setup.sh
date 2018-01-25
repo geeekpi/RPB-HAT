@@ -10,6 +10,7 @@ sudo cp -Rvf remoteswitch.sh /etc/init.d/
 sudo chmod +x /etc/init.d/remoteswitch
 sudo chkconfig --add remoteswitch 
 sudo chkconfig --level 2345 remoteswitch on
+sudo sed '$i /etc/init.d/remoteswitch -s 24'  /etc/rc.local
 echo -e "\e[32:40m Reboot your raspberry and try to press the power button, reboot button and test it.\e[0m"
 for i in 5 4 3 2 1
 do 
