@@ -6,7 +6,7 @@ echo -e "\e[32;40m Download RPB driver...\e[0m"
 cd ~
 git clone https://github.com/geeekpi/RPB.git
 cd RPB/
-sudo cp -Rvf remoteswitch.sh /etc/init.d/
+sudo cp -Rvf remoteswitch /etc/init.d/
 sudo chmod +x /etc/init.d/remoteswitch
 sudo chkconfig --add remoteswitch 
 sudo chkconfig --level 2345 remoteswitch on
