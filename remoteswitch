@@ -40,6 +40,22 @@
 ## +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
 ## | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
 ## +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+### BEGIN INIT INFO
+# Provides:          remoteswitch
+# Required-Start:    
+# Required-Stop:     
+# Should-Start:
+# Should-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: IR remote & power buttom for RPi v2.02
+# Description:  It's a script which can detect the shutdown signal from the borad to shutdown the raspberry Pi.
+### END INIT INFO
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+
+
 # This pin is based on wringPi mode, and it will detect the level of the pin, if level is high,
 # means need to initialize shutdown procedure.
 shutdown_signal_pin=5
