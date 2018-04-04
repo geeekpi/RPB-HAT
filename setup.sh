@@ -5,10 +5,11 @@ sudo apt-get -y install wiringpi git-core chkconfig
 echo -e "\e[32;40m Download RPB driver...\e[0m"
 sudo cp -Rvf ./remoteswitch /etc/init.d/
 sudo chmod +x /etc/init.d/remoteswitch
+sudo /etc/init.d/remoteswitch &
 sudo chkconfig --add remoteswitch 2&>/dev/null
 sudo chkconfig --level 2345 remoteswitch on 2&>/dev/null
 sudo sed -i '/exit/d' /etc/rc.local
-sudo sed -i '$i gpio mode 25 OUT\ngpio write 25 1\nexit 0'  /etc/rc.local
+sudo sed -i '$i gpio mode 25 OUT\ngpio write 25 1\nsudo /etc/init.d/remoteswitch &\nexit 0'  /etc/rc.local
 echo -e '"\e[32:40m Reboot your raspberry and try to press the power button, reboot button and test it.\e[0m"'
 for i in 5 4 3 2 1
 do 
