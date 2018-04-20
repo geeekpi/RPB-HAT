@@ -54,8 +54,6 @@
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
-
-
 # This pin is based on wringPi mode, and it will detect the level of the pin, if level is high,
 # means need to initialize shutdown procedure.
 shutdown_signal_pin=5
